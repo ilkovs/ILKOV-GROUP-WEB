@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilkov Group — Apps That Work Smarter</title>
+    <meta name="description" content="Ilkov Group builds thoughtful mobile apps. Our first product, ScanLyte, is an AI-powered document scanner for iOS.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --accent: #2563EB;
+            --accent-soft: #EFF6FF;
+            --border: #E8E8E5;
+            --gradient-start: #1E3A5F;
+            --gradient-end: #3B82F6;
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 140px 24px 80px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* App Section */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+        }
+
+        /* App Card */
+        .app-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            transition: box-shadow 0.3s;
+        }
+
+        .app-card:hover {
+            box-shadow: 0 24px 48px rgba(0,0,0,0.06);
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+        }
+
+        .app-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .app-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .app-info .app-tagline {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .app-info .app-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .app-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .app-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .app-feature .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: var(--text);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .app-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .app-store-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Phone Mockup */
+        .phone-mockup {
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-frame {
+            width: 280px;
+            height: 560px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 36px;
+            padding: 12px;
+            box-shadow: 0 32px 64px rgba(30, 58, 95, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #0F172A;
+            border-radius: 26px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .phone-screen .scan-icon {
+            width: 64px;
+            height: 64px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { border-color: rgba(255,255,255,0.3); }
+            50% { border-color: rgba(59, 130, 246, 0.8); }
+        }
+
+        .phone-screen h4 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .phone-screen p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* About */
+        .about {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .about h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .about p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .values {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .value-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .value-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .value-item h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .value-item p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-card {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 32px;
+            }
+            .phone-mockup { order: -1; }
+            .phone-frame { width: 220px; height: 440px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .nav-links { display: none; }
+            .app-features { grid-template-columns: 1fr; }
+        }
+
+        /* Page transitions */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.15s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Legal pages */
+        .legal-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 120px 24px 80px;
+            display: none;
+        }
+
+        .legal-page h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .legal-page .last-updated {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 32px;
+        }
+
+        .legal-page h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 8px;
+        }
+
+        .legal-page p, .legal-page li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .legal-page ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .legal-page a {
+            color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo" onclick="showPage('home')">Ilkov <span>Group</span></a>
+            <ul class="nav-links">
+                <li><a href="#apps" onclick="showPage('home')">Apps</a></li>
+                <li><a href="#about" onclick="showPage('home')">About</a></li>
+                <li><a href="#" onclick="showPage('privacy')">Privacy</a></li>
+                <li><a href="#" onclick="showPage('terms')">Terms</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="page-home">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="fade-in">
+                <div class="hero-badge">Launching 2026</div>
+            </div>
+            <h1 class="fade-in">Apps that work<br>smarter for you</h1>
+            <p class="fade-in">Ilkov Group builds focused, privacy-first mobile apps that solve real problems — no bloat, no gimmicks.</p>
+        </section>
+
+        <!-- Apps -->
+        <section class="section" id="apps">
+            <div class="section-label">Our Apps</div>
+            <h2>Meet ScanLyte</h2>
+
+            <div class="app-card">
+                <div class="app-info">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 8V6a2 2 0 0 1 2-2h2"/>
+                            <path d="M4 16v2a2 2 0 0 0 2 2h2"/>
+                            <path d="M16 4h2a2 2 0 0 1 2 2v2"/>
+                            <path d="M16 20h2a2 2 0 0 0 2-2v-2"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>ScanLyte</h3>
+                    <div class="app-tagline">AI-Powered Document Scanner</div>
+                    <p class="app-desc">
+                        Turn your iPhone into a powerful document scanner. ScanLyte captures, signs, and organizes your documents with AI — all on-device, all private.
+                    </p>
+
+                    <div class="app-features">
+                        <div class="app-feature"><span class="dot"></span>AI Document Summary</div>
+                        <div class="app-feature"><span class="dot"></span>PDF Signing</div>
+                        <div class="app-feature"><span class="dot"></span>Smart Auto-Categorize</div>
+                        <div class="app-feature"><span class="dot"></span>Table → CSV Export</div>
+                        <div class="app-feature"><span class="dot"></span>OCR Text Extraction</div>
+                        <div class="app-feature"><span class="dot"></span>Custom Watermarks</div>
+                        <div class="app-feature"><span class="dot"></span>Multi-Page Reorder</div>
+                        <div class="app-feature"><span class="dot"></span>Privacy First</div>
+                    </div>
+
+                    <a href="#" class="app-store-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.99 2.97 12.5 4.7 9.45C5.55 7.93 7.13 6.97 8.82 6.95C10.1 6.93 11.32 7.82 12.11 7.82C12.89 7.82 14.37 6.74 15.92 6.91C16.57 6.94 18.39 7.17 19.56 8.9C19.47 8.96 17.39 10.15 17.41 12.68C17.44 15.73 20.06 16.73 20.09 16.74C20.07 16.81 19.67 18.18 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                        </svg>
+                        Coming Soon on App Store
+                    </a>
+                </div>
+
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="scan-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 8V6a2 2 0 0 1 2-2h2"/>
+                                    <path d="M4 16v2a2 2 0 0 0 2 2h2"/>
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v2"/>
+                                    <path d="M16 20h2a2 2 0 0 0 2-2v-2"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                            </div>
+                            <h4>ScanLyte</h4>
+                            <p>Scan, Sign, Organize with AI</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about" id="about">
+            <div class="about-grid">
+                <div>
+                    <h2>Built with intention</h2>
+                    <p>Ilkov Group is a small software studio focused on building tools that respect your time and privacy. We don't chase trends — we solve problems that matter, one thoughtful app at a time.</p>
+                </div>
+                <div class="values">
+                    <div class="value-item">
+                        <div class="value-icon">🔒</div>
+                        <div>
+                            <h4>Privacy First</h4>
+                            <p>Your data stays on your device. We don't collect, sell, or share personal information.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">⚡</div>
+                        <div>
+                            <h4>No Bloat</h4>
+                            <p>Every feature earns its place. We build what you need, not what inflates our metrics.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🎯</div>
+                        <div>
+                            <h4>Quality Over Quantity</h4>
+                            <p>We'd rather ship one great app than ten mediocre ones.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PRIVACY POLICY PAGE -->
+    <div id="page-privacy" class="legal-page">
+        <a href="#" class="back-link" onclick="showPage('home')">← Back to Home</a>
+        <h1>Privacy Policy</h1>
+        <p class="last-updated">Last updated: February 2026</p>
+
+        <p>Ilkov Group LLC ("we", "our", or "us") operates mobile applications including ScanLyte. This page informs you of our policies regarding the collection, use, and disclosure of personal information.</p>
+
+        <h2>Information We Collect</h2>
+        <p>Our apps are designed with privacy as a core principle. ScanLyte processes all documents, OCR, and AI features on your device. We do not collect, store, or transmit your scanned documents.</p>
+
+        <h2>AI Features</h2>
+        <p>ScanLyte's AI Summary feature (available on Pro and Business tiers) sends document text to OpenAI's API for processing. This text is transmitted securely and is not stored by us. OpenAI's data usage policies apply to this processing. All other AI features (categorization, OCR) run entirely on your device.</p>
+
+        <h2>Subscription Data</h2>
+        <p>Subscriptions are processed through Apple's App Store. We do not have access to your payment information. Apple may share anonymized purchase data with us for analytics purposes.</p>
+
+        <h2>Analytics</h2>
+        <p>We may collect anonymized usage analytics (such as feature usage counts and crash reports) to improve our apps. This data cannot be used to identify you personally.</p>
+
+        <h2>Data Storage</h2>
+        <p>All documents, scans, and app data are stored locally on your device. We do not operate servers that store your personal content.</p>
+
+        <h2>Third-Party Services</h2>
+        <ul>
+            <li><strong>Apple App Store</strong> — for subscription management and payment processing</li>
+            <li><strong>OpenAI API</strong> — for AI-powered document summaries (Pro and Business tiers only)</li>
+        </ul>
+
+        <h2>Children's Privacy</h2>
+        <p>Our apps are not directed at children under 13. We do not knowingly collect personal information from children.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>We may update this policy from time to time. Changes will be posted on this page with an updated revision date.</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have questions about this privacy policy, contact us at <a href="mailto:support@ilkovgroup.com">support@ilkovgroup.com</a>.</p>
+    </div>
+
+    <!-- TERMS OF USE PAGE -->
+    <div id="page-terms" class="legal-page">
+        <a href="#" class="back-link" onclick="showPage('home')">← Back to Home</a>
+        <h1>Terms of Use</h1>
+        <p class="last-updated">Last updated: February 2026</p>
+
+        <p>By downloading or using apps made by Ilkov Group LLC ("we", "our"), you agree to these terms.</p>
+
+        <h2>License</h2>
+        <p>We grant you a limited, non-exclusive, non-transferable license to use our apps for personal or business purposes, subject to these terms and Apple's App Store Terms of Service.</p>
+
+        <h2>Subscriptions</h2>
+        <p>Some features require a paid subscription. Subscriptions are billed monthly through Apple's App Store and auto-renew unless cancelled at least 24 hours before the end of the current period. You can manage subscriptions in your Apple ID settings.</p>
+
+        <h2>Acceptable Use</h2>
+        <p>You agree not to:</p>
+        <ul>
+            <li>Reverse engineer, decompile, or disassemble our apps</li>
+            <li>Use our apps for any unlawful purpose</li>
+            <li>Attempt to gain unauthorized access to our services</li>
+            <li>Redistribute or resell our apps or their content</li>
+        </ul>
+
+        <h2>Disclaimer</h2>
+        <p>Our apps are provided "as is" without warranties of any kind. We do not guarantee that our apps will be error-free or uninterrupted. Document scanning and OCR results may not be 100% accurate.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Ilkov Group LLC shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our apps.</p>
+
+        <h2>Changes</h2>
+        <p>We reserve the right to modify these terms at any time. Continued use of our apps after changes constitutes acceptance of the new terms.</p>
+
+        <h2>Contact</h2>
+        <p>Questions? Reach us at <a href="mailto:support@ilkovgroup.com">support@ilkovgroup.com</a>.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">© 2026 Ilkov Group LLC. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+                <a href="#" onclick="showPage('terms')">Terms of Use</a>
+                <a href="mailto:support@ilkovgroup.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(page) {
+            document.getElementById('page-home').style.display = page === 'home' ? 'block' : 'none';
+            document.getElementById('page-privacy').style.display = page === 'privacy' ? 'block' : 'none';
+            document.getElementById('page-terms').style.display = page === 'terms' ? 'block' : 'none';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
