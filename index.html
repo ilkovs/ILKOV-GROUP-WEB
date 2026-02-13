@@ -7,143 +7,202 @@
     <meta name="description" content="Ilkov Group builds thoughtful mobile apps. Our first product, ScanLyte, is an AI-powered document scanner for iOS.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #FAFAF8;
-            --bg-card: #FFFFFF;
-            --text: #1A1A1A;
-            --text-secondary: #6B6B6B;
-            --accent: #2563EB;
-            --accent-soft: #EFF6FF;
-            --border: #E8E8E5;
+            --bg: #08090E;
+            --bg-elevated: #0F1117;
+            --bg-card: #141620;
+            --bg-card-hover: #1A1D2B;
+            --text: #E8E9ED;
+            --text-secondary: #7A7D8E;
+            --text-dim: #4A4D5E;
+            --accent: #3B7BF6;
+            --accent-glow: rgba(59, 123, 246, 0.15);
+            --accent-bright: #5B9BFF;
+            --border: rgba(255,255,255,0.06);
+            --border-accent: rgba(59, 123, 246, 0.2);
             --gradient-start: #1E3A5F;
             --gradient-end: #3B82F6;
             --radius: 16px;
+            --radius-sm: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* ========== GRID BACKGROUND ========== */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .grid-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, var(--accent-glow), transparent 70%);
+        }
+
+        /* ========== NAVIGATION ========== */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
-            background: rgba(250, 250, 248, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 9, 14, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
         }
 
         .nav-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 16px 24px;
+            padding: 0 32px;
+            height: 72px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .logo span {
-            color: var(--accent);
+        .logo img {
+            width: 250px;
+            display: block;
+            filter: brightness(0) invert(1);
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 8px;
             list-style: none;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.2s;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            letter-spacing: 0.01em;
         }
 
-        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
 
-        /* Hero */
+        /* ========== HERO ========== */
         .hero {
-            max-width: 1100px;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 140px 24px 80px;
+            padding: 180px 32px 100px;
             text-align: center;
         }
 
         .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: var(--accent-soft);
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-accent);
+            color: var(--accent-bright);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
             border-radius: 100px;
-            margin-bottom: 24px;
-            letter-spacing: 0.04em;
+            margin-bottom: 32px;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
         }
 
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-bright);
+            border-radius: 50%;
+            animation: blink 2s ease infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(3rem, 7vw, 5rem);
             font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #8A8D9E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
             font-size: 1.15rem;
             color: var(--text-secondary);
-            max-width: 540px;
+            max-width: 520px;
             margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.7;
         }
 
-        /* App Section */
+        /* ========== SECTION COMMON ========== */
         .section {
-            max-width: 1100px;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 24px 80px;
+            padding: 40px 32px 100px;
         }
 
         .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             margin-bottom: 12px;
         }
 
         .section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
             margin-bottom: 48px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #9A9DAE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
         }
 
-        /* App Card */
+        /* ========== APP CARD ========== */
         .app-card {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -151,92 +210,106 @@
             align-items: center;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 48px;
-            transition: box-shadow 0.3s;
+            border-radius: 20px;
+            padding: 56px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.4s;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
         .app-card:hover {
-            box-shadow: 0 24px 48px rgba(0,0,0,0.06);
+            border-color: var(--border-accent);
         }
 
-        .app-icon {
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-icon-img {
             width: 72px;
             height: 72px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
-        }
-
-        .app-icon svg {
-            width: 36px;
-            height: 36px;
+            box-shadow: 0 8px 32px rgba(59, 123, 246, 0.2);
         }
 
         .app-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 4px;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .app-info .app-tagline {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 16px;
+            font-weight: 400;
         }
 
         .app-info .app-desc {
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.7;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            font-weight: 300;
         }
 
         .app-features {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 28px;
+            gap: 8px;
+            margin-bottom: 32px;
         }
 
         .app-feature {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.82rem;
+            gap: 10px;
+            font-size: 0.8rem;
             color: var(--text-secondary);
+            font-weight: 400;
         }
 
         .app-feature .dot {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: var(--accent);
             border-radius: 50%;
             flex-shrink: 0;
+            box-shadow: 0 0 8px var(--accent-glow);
         }
 
         .app-store-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 28px;
-            background: var(--text);
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--accent), #2563EB);
             color: white;
             border-radius: 12px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 123, 246, 0.3);
         }
 
         .app-store-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(59, 123, 246, 0.4);
         }
 
         .app-store-btn svg {
@@ -244,26 +317,30 @@
             height: 20px;
         }
 
-        /* Phone Mockup */
+        /* ========== PHONE MOCKUP ========== */
         .phone-mockup {
             display: flex;
             justify-content: center;
         }
 
         .phone-frame {
-            width: 280px;
-            height: 560px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border-radius: 36px;
-            padding: 12px;
-            box-shadow: 0 32px 64px rgba(30, 58, 95, 0.3);
+            width: 270px;
+            height: 550px;
+            background: linear-gradient(160deg, #1C2333, #0D1017);
+            border-radius: 40px;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow:
+                0 32px 80px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.05) inset,
+                0 0 80px rgba(59, 123, 246, 0.08);
         }
 
         .phone-screen {
             width: 100%;
             height: 100%;
-            background: #0F172A;
-            border-radius: 26px;
+            background: linear-gradient(180deg, #0C1220 0%, #0A0F1A 100%);
+            border-radius: 33px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -272,107 +349,175 @@
             color: white;
             padding: 24px;
             text-align: center;
+            position: relative;
+        }
+
+        .phone-screen::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 123, 246, 0.12), transparent 70%);
+            pointer-events: none;
         }
 
         .phone-screen .scan-icon {
             width: 64px;
             height: 64px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 12px;
+            border: 2px solid rgba(59, 123, 246, 0.3);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
-            animation: pulse 2s infinite;
+            position: relative;
+            animation: scanPulse 3s ease infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { border-color: rgba(255,255,255,0.3); }
-            50% { border-color: rgba(59, 130, 246, 0.8); }
+        @keyframes scanPulse {
+            0%, 100% { border-color: rgba(59, 123, 246, 0.2); box-shadow: 0 0 0px transparent; }
+            50% { border-color: rgba(59, 123, 246, 0.6); box-shadow: 0 0 20px rgba(59, 123, 246, 0.15); }
         }
 
         .phone-screen h4 {
+            font-family: 'Outfit', sans-serif;
             font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 6px;
+            position: relative;
         }
 
         .phone-screen p {
             font-size: 0.75rem;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.4);
+            font-weight: 300;
+            position: relative;
         }
 
-        /* About */
+        .scan-line {
+            position: absolute;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+            border-radius: 1px;
+            animation: scanDown 3s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes scanDown {
+            0% { top: 30%; opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { top: 70%; opacity: 0; }
+        }
+
+        /* ========== ABOUT ========== */
         .about {
-            max-width: 1100px;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 24px;
+            padding: 100px 32px;
             border-top: 1px solid var(--border);
         }
 
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 64px;
+            gap: 80px;
             align-items: start;
         }
 
         .about h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #9A9DAE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .about p {
+        .about > .about-grid > div:first-child > p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
         }
 
         .values {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .value-item {
             display: flex;
-            gap: 14px;
+            gap: 16px;
             align-items: flex-start;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+
+        .value-item:hover {
+            border-color: var(--border-accent);
+            background: var(--bg-card-hover);
         }
 
         .value-icon {
             width: 40px;
             height: 40px;
-            background: var(--accent-soft);
+            background: var(--accent-glow);
+            border: 1px solid var(--border-accent);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            font-size: 1.1rem;
+        }
+
+        .value-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent-bright);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .value-item h4 {
             font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
+            color: var(--text);
         }
 
         .value-item p {
             font-size: 0.82rem;
             color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
         }
 
-        /* Footer */
+        /* ========== FOOTER ========== */
         footer {
+            position: relative;
+            z-index: 1;
             border-top: 1px solid var(--border);
-            padding: 40px 24px;
+            padding: 40px 32px;
         }
 
         .footer-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -380,8 +525,9 @@
         }
 
         .footer-left {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-weight: 400;
         }
 
         .footer-links {
@@ -390,74 +536,53 @@
         }
 
         .footer-links a {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.2s;
+            font-weight: 400;
         }
 
         .footer-links a:hover { color: var(--text); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .app-card {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 32px;
-            }
-            .phone-mockup { order: -1; }
-            .phone-frame { width: 220px; height: 440px; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .nav-links { display: none; }
-            .app-features { grid-template-columns: 1fr; }
-        }
-
-        /* Page transitions */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        .fade-in:nth-child(2) { animation-delay: 0.15s; }
-        .fade-in:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Legal pages */
+        /* ========== LEGAL PAGES ========== */
         .legal-page {
+            position: relative;
+            z-index: 1;
             max-width: 720px;
             margin: 0 auto;
-            padding: 120px 24px 80px;
+            padding: 140px 32px 80px;
             display: none;
         }
 
         .legal-page h1 {
-            font-family: 'Playfair Display', serif;
             font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
             margin-bottom: 8px;
         }
 
         .legal-page .last-updated {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 32px;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            margin-bottom: 40px;
         }
 
         .legal-page h2 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-top: 28px;
-            margin-bottom: 8px;
+            margin-top: 32px;
+            margin-bottom: 10px;
+            color: var(--text);
         }
 
         .legal-page p, .legal-page li {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
+            font-size: 0.88rem;
+            line-height: 1.8;
             margin-bottom: 12px;
+            font-weight: 300;
         }
 
         .legal-page ul {
@@ -466,27 +591,81 @@
         }
 
         .legal-page a {
-            color: var(--accent);
+            color: var(--accent-bright);
+            text-decoration: none;
+        }
+
+        .legal-page a:hover {
+            text-decoration: underline;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            color: var(--accent);
+            gap: 8px;
+            color: var(--accent-bright);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 500;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-accent);
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            background: rgba(59, 123, 246, 0.2);
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .app-card {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 32px;
+            }
+            .phone-mockup { order: -1; }
+            .phone-frame { width: 220px; height: 450px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .app-features { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .logo img { width: 180px; }
+            .hero { padding: 140px 24px 60px; }
+            .hero h1 { font-size: 2.5rem; }
+            .section, .about { padding-left: 24px; padding-right: 24px; }
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
+    <div class="grid-bg"></div>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-inner">
-            <a href="#" class="logo" onclick="showPage('home')">Ilkov <span>Group</span></a>
+            <a href="#" class="logo" onclick="showPage('home')"><img src="logo.png" alt="Ilkov Group"></a>
             <ul class="nav-links">
                 <li><a href="#apps" onclick="showPage('home')">Apps</a></li>
                 <li><a href="#about" onclick="showPage('home')">About</a></li>
@@ -499,31 +678,21 @@
     <!-- HOME PAGE -->
     <div id="page-home">
 
-        <!-- Hero -->
         <section class="hero">
-            <div class="fade-in">
+            <div class="reveal">
                 <div class="hero-badge">Launching 2026</div>
             </div>
-            <h1 class="fade-in">Apps that work<br>smarter for you</h1>
-            <p class="fade-in">Ilkov Group builds focused, privacy-first mobile apps that solve real problems — no bloat, no gimmicks.</p>
+            <h1 class="reveal reveal-delay-1">Apps that work<br>smarter for you</h1>
+            <p class="reveal reveal-delay-2">Ilkov Group builds focused, privacy-first mobile apps that solve real problems — no bloat, no gimmicks.</p>
         </section>
 
-        <!-- Apps -->
         <section class="section" id="apps">
-            <div class="section-label">Our Apps</div>
-            <h2>Meet ScanLyte</h2>
+            <div class="section-label reveal">Our Apps</div>
+            <h2 class="reveal reveal-delay-1">Meet ScanLyte</h2>
 
-            <div class="app-card">
+            <div class="app-card reveal reveal-delay-2">
                 <div class="app-info">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 8V6a2 2 0 0 1 2-2h2"/>
-                            <path d="M4 16v2a2 2 0 0 0 2 2h2"/>
-                            <path d="M16 4h2a2 2 0 0 1 2 2v2"/>
-                            <path d="M16 20h2a2 2 0 0 0 2-2v-2"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
-                    </div>
+                    <img src="scanlyte_icon.png" alt="ScanLyte" class="app-icon-img">
                     <h3>ScanLyte</h3>
                     <div class="app-tagline">AI-Powered Document Scanner</div>
                     <p class="app-desc">
@@ -552,6 +721,7 @@
                 <div class="phone-mockup">
                     <div class="phone-frame">
                         <div class="phone-screen">
+                            <div class="scan-line"></div>
                             <div class="scan-icon">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M4 8V6a2 2 0 0 1 2-2h2"/>
@@ -569,30 +739,35 @@
             </div>
         </section>
 
-        <!-- About -->
         <section class="about" id="about">
             <div class="about-grid">
-                <div>
+                <div class="reveal">
                     <h2>Built with intention</h2>
                     <p>Ilkov Group is a small software studio focused on building tools that respect your time and privacy. We don't chase trends — we solve problems that matter, one thoughtful app at a time.</p>
                 </div>
                 <div class="values">
-                    <div class="value-item">
-                        <div class="value-icon">🔒</div>
+                    <div class="value-item reveal">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
                         <div>
                             <h4>Privacy First</h4>
                             <p>Your data stays on your device. We don't collect, sell, or share personal information.</p>
                         </div>
                     </div>
-                    <div class="value-item">
-                        <div class="value-icon">⚡</div>
+                    <div class="value-item reveal reveal-delay-1">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
                         <div>
                             <h4>No Bloat</h4>
                             <p>Every feature earns its place. We build what you need, not what inflates our metrics.</p>
                         </div>
                     </div>
-                    <div class="value-item">
-                        <div class="value-icon">🎯</div>
+                    <div class="value-item reveal reveal-delay-2">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
                         <div>
                             <h4>Quality Over Quantity</h4>
                             <p>We'd rather ship one great app than ten mediocre ones.</p>
@@ -605,7 +780,7 @@
 
     <!-- PRIVACY POLICY PAGE -->
     <div id="page-privacy" class="legal-page">
-        <a href="#" class="back-link" onclick="showPage('home')">← Back to Home</a>
+        <a href="#" class="back-link" onclick="showPage('home')">&#8592; Back to Home</a>
         <h1>Privacy Policy</h1>
         <p class="last-updated">Last updated: February 2026</p>
 
@@ -644,7 +819,7 @@
 
     <!-- TERMS OF USE PAGE -->
     <div id="page-terms" class="legal-page">
-        <a href="#" class="back-link" onclick="showPage('home')">← Back to Home</a>
+        <a href="#" class="back-link" onclick="showPage('home')">&#8592; Back to Home</a>
         <h1>Terms of Use</h1>
         <p class="last-updated">Last updated: February 2026</p>
 
@@ -681,10 +856,10 @@
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
-            <div class="footer-left">© 2026 Ilkov Group LLC. All rights reserved.</div>
+            <div class="footer-left">&copy; 2026 Ilkov Group LLC</div>
             <div class="footer-links">
-                <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
-                <a href="#" onclick="showPage('terms')">Terms of Use</a>
+                <a href="#" onclick="showPage('privacy')">Privacy</a>
+                <a href="#" onclick="showPage('terms')">Terms</a>
                 <a href="mailto:support@ilkovgroup.com">Contact</a>
             </div>
         </div>
@@ -697,6 +872,17 @@
             document.getElementById('page-terms').style.display = page === 'terms' ? 'block' : 'none';
             window.scrollTo(0, 0);
         }
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
